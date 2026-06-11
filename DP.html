@@ -1,0 +1,2881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="扬州工业职业技术学院 - 厚德强能，笃学创新。江苏省示范性高等职业院校，扬子津科教园核心院校。">
+<title>扬州工业职业技术学院 | 厚德强能 · 笃学创新</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ============================================================
+   CSS Custom Properties & Global Styles
+   ============================================================ */
+:root {
+  --bg-primary: #f5f0eb;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255,255,255,0.72);
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --text-muted: #8888a0;
+  --accent-gold: #c9a96e;
+  --accent-teal: #2d8a7b;
+  --accent-ink: #1a3a4a;
+  --accent-warm: #e07b5a;
+  --glow-gold: rgba(201,169,110,0.25);
+  --glow-teal: rgba(45,138,123,0.2);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.08);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+  --border-subtle: rgba(0,0,0,0.06);
+  --glass-bg: rgba(255,255,255,0.65);
+  --glass-border: rgba(255,255,255,0.5);
+  --particle-color: 201,169,110;
+  --nav-bg: rgba(245,240,235,0.85);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --bg-card: rgba(26,26,46,0.75);
+  --text-primary: #e8e8f0;
+  --text-secondary: #b0b0c8;
+  --text-muted: #707088;
+  --accent-gold: #d4b87a;
+  --accent-teal: #4dbaa8;
+  --accent-ink: #8ab4d8;
+  --accent-warm: #f09b7a;
+  --glow-gold: rgba(212,184,122,0.3);
+  --glow-teal: rgba(77,186,168,0.25);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.3);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.5);
+  --border-subtle: rgba(255,255,255,0.06);
+  --glass-bg: rgba(26,26,46,0.7);
+  --glass-border: rgba(255,255,255,0.08);
+  --particle-color: 212,184,122;
+  --nav-bg: rgba(15,15,26,0.88);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: default;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+/* ============================================================
+   Intro Particle Animation (核爆点)
+   ============================================================ */
+#intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#intro-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#intro-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.intro-text-stage {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.intro-text-stage.show { opacity: 1; }
+
+.intro-text-stage .intro-logo-text {
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #c9a96e, #e8d5a3, #c9a96e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: introGlow 2s ease-in-out infinite;
+}
+
+@keyframes introGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+/* ============================================================
+   Navigation
+   ============================================================ */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--nav-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), background 0.5s ease;
+}
+
+#navbar.hidden { transform: translateY(-100%); }
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-logo i { color: var(--accent-gold); font-size: 1.4rem; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 2px;
+  background: var(--accent-gold);
+  border-radius: 1px;
+  transition: width 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.nav-links a:hover { color: var(--accent-gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.theme-toggle {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  box-shadow: 0 0 20px var(--glow-gold);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  #navbar { padding: 0 20px; }
+  .nav-links {
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 24px;
+    gap: 16px;
+    transform: translateY(-120%);
+    transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav-links.open { transform: translateY(0); }
+  .mobile-menu-btn { display: block; }
+}
+
+/* ============================================================
+   Section Common
+   ============================================================ */
+.section {
+  position: relative;
+  padding: 100px 40px;
+  overflow: hidden;
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-teal) 60%, var(--accent-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 60px;
+  font-weight: 400;
+}
+
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-teal));
+  border-radius: 2px;
+  margin: 0 auto 60px;
+}
+
+/* ============================================================
+   Hero Section
+   ============================================================ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 64px;
+  background: var(--bg-primary);
+  transition: background 0.8s ease;
+}
+
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  font-size: 0.88rem;
+  color: var(--accent-teal);
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.hero-logo-img {
+  display: block;
+  max-width: 90%;
+  width: 600px;
+  height: auto;
+  margin: 0 auto 16px;
+  animation: fadeInUp 0.8s 0.15s ease forwards;
+  opacity: 0;
+  filter: drop-shadow(0 4px 20px rgba(201,169,110,0.25));
+  transition: filter 0.5s ease;
+}
+
+.hero-logo-img:hover {
+  filter: drop-shadow(0 8px 32px rgba(201,169,110,0.45));
+}
+
+.hero-motto-img {
+  display: block;
+  max-width: 80%;
+  width: 400px;
+  height: auto;
+  margin: 0 auto 20px;
+  animation: fadeInUp 0.8s 0.25s ease forwards;
+  opacity: 0;
+  filter: drop-shadow(0 3px 14px rgba(45,138,123,0.2));
+  transition: filter 0.5s ease;
+}
+
+.hero-motto-img:hover {
+  filter: drop-shadow(0 6px 24px rgba(45,138,123,0.4));
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--text-secondary);
+  margin-bottom: 36px;
+  line-height: 1.8;
+  animation: fadeInUp 0.8s 0.3s ease forwards;
+  opacity: 0;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s 0.45s ease forwards;
+  opacity: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-gold), #b8913a);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--glow-gold);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px var(--glow-gold);
+}
+
+.btn-primary:active { transform: scale(0.96); }
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--accent-teal);
+  color: var(--accent-teal);
+}
+
+.btn-outline:hover {
+  background: var(--accent-teal);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px var(--glow-teal);
+}
+
+.btn-outline:active { transform: scale(0.96); }
+
+.btn-large {
+  padding: 18px 40px;
+  font-size: 1.15rem;
+  border-radius: 32px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Data Dashboard (数据中心)
+   ============================================================ */
+#data-section {
+  background: var(--bg-secondary);
+  transition: background 0.6s ease;
+}
+
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+
+.data-card {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.data-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-gold);
+}
+
+.data-number {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.data-label {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.data-suffix {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+@media (max-width: 1024px) {
+  .data-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .data-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .data-card { padding: 24px 12px; }
+}
+
+/* ============================================================
+   Achievements Section (办学成果)
+   ============================================================ */
+#achievements-section {
+  background: var(--bg-primary);
+  transition: background 0.6s ease;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+.achievement-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.achievement-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.achievement-card .ach-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.achievement-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.achievement-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   Programs Section (专业设置)
+   ============================================================ */
+#programs-section {
+  background: var(--bg-secondary);
+  transition: background 0.6s ease;
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.program-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.program-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-teal);
+}
+
+.program-card .prog-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.program-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.program-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   Swan Mascot Section (IP形象·单独章节·降低视觉权重)
+   ============================================================ */
+#mascot-section {
+  background: var(--bg-primary);
+  transition: background 0.6s ease;
+}
+
+.mascot-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mascot-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 52px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: pointer;
+}
+
+.mascot-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mascot-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, transparent 30%, var(--accent-gold), var(--accent-teal), transparent 70%);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.6s ease;
+  background-size: 200% 200%;
+  animation: borderGlow 3s ease-in-out infinite paused;
+}
+
+.mascot-card.white::before {
+  background: radial-gradient(ellipse at 50% 25%, rgba(255,255,255,0.5), transparent 65%);
+}
+
+.mascot-card.black::before {
+  background: radial-gradient(ellipse at 50% 25%, rgba(80,90,150,0.3), transparent 65%);
+}
+
+.mascot-card:hover {
+  transform: translateY(-10px) scale(1.04);
+  box-shadow: var(--shadow-lg);
+}
+
+.mascot-card:hover::before { opacity: 1; }
+.mascot-card:hover::after { opacity: 1; animation-play-state: running; }
+
+.mascot-card.white:hover {
+  border-color: rgba(255,255,255,0.5);
+  box-shadow: 0 0 60px rgba(201,169,110,0.35), 0 0 5px rgba(201,169,110,0.15);
+}
+
+.mascot-card.black:hover {
+  border-color: rgba(120,130,170,0.5);
+  box-shadow: 0 0 60px rgba(100,100,200,0.3), 0 0 5px rgba(100,100,200,0.15);
+}
+
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.mascot-icon-wrap {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-size: 5.5rem;
+  margin-bottom: 24px;
+  animation: swanFloat 3s ease-in-out infinite;
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.mascot-card:hover .mascot-icon-wrap {
+  transform: scale(1.12);
+  animation-duration: 1.5s;
+}
+
+.mascot-card:nth-child(2) .mascot-icon-wrap { animation-delay: 1.5s; }
+
+@keyframes swanFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  20% { transform: translateY(-14px) rotate(-5deg); }
+  40% { transform: translateY(-6px) rotate(-2deg); }
+  60% { transform: translateY(-14px) rotate(5deg); }
+  80% { transform: translateY(-6px) rotate(2deg); }
+}
+
+.mascot-wings {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.8rem;
+  opacity: 0.5;
+  animation: wingFlap 0.7s ease-in-out infinite;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mascot-card:hover .mascot-wings { opacity: 0.85; }
+
+.mascot-wings.left { margin-left: -36px; animation-delay: 0s; }
+.mascot-wings.right { margin-left: 36px; animation-delay: 0.35s; }
+
+@keyframes wingFlap {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.25; }
+  50% { transform: translate(-50%, -50%) rotate(25deg); opacity: 0.9; }
+}
+
+.mascot-card h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.mascot-card.white h3 { color: #b8913a; }
+.mascot-card.black h3 { color: #6a7aba; }
+
+.mascot-card .mascot-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+}
+
+.mascot-interact-count {
+  font-size: 0.85rem;
+  color: var(--accent-teal);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  background: var(--bg-secondary);
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.4s ease;
+}
+
+.mascot-card:hover .mascot-interact-count {
+  border-color: var(--accent-gold);
+  transform: translateY(-2px);
+}
+
+.mascot-water-ripple {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--accent-teal), var(--accent-gold), var(--accent-teal), transparent);
+  background-size: 200% 100%;
+  animation: waterShimmer 2.5s ease-in-out infinite;
+}
+
+.mascot-card:hover .mascot-water-ripple { height: 5px; }
+
+@keyframes waterShimmer {
+  0%, 100% { opacity: 0.25; background-position: 0% 50%; }
+  50% { opacity: 0.9; background-position: 100% 50%; }
+}
+
+/* Swan blessing modal */
+.swan-blessing-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9989;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.swan-blessing-overlay.show { opacity: 1; visibility: visible; }
+
+.swan-blessing {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: var(--bg-card);
+  backdrop-filter: blur(30px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 36px 40px;
+  text-align: center;
+  z-index: 9990;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.swan-blessing.show { transform: translate(-50%, -50%) scale(1); }
+
+.swan-blessing .blessing-icon { font-size: 3rem; margin-bottom: 12px; }
+.swan-blessing .blessing-text { font-size: 1.15rem; line-height: 1.8; color: var(--text-primary); margin-bottom: 18px; }
+.swan-blessing .blessing-close {
+  padding: 10px 28px;
+  border-radius: 20px;
+  background: var(--accent-gold);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.swan-blessing .blessing-close:active { transform: scale(0.95); }
+
+/* ============================================================
+   Timeline Section (发展历程·滚动叙事)
+   ============================================================ */
+#timeline-section {
+  background: var(--bg-secondary);
+  transition: background 0.6s ease;
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent-gold), var(--accent-teal), var(--accent-gold));
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 60px;
+  width: 50%;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+              transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-item:nth-child(odd) {
+  left: 0;
+  padding-right: 50px;
+  text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+  left: 50%;
+  padding-left: 50px;
+  text-align: left;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 12px var(--glow-gold);
+  z-index: 2;
+}
+
+.timeline-item:nth-child(odd)::before {
+  right: -9px;
+}
+
+.timeline-item:nth-child(even)::before {
+  left: -9px;
+}
+
+.timeline-year {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.timeline-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .timeline::before { left: 20px; }
+  .timeline-item,
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    width: 100%;
+    left: 0;
+    padding-left: 50px;
+    padding-right: 0;
+    text-align: left;
+  }
+  .timeline-item:nth-child(odd)::before,
+  .timeline-item:nth-child(even)::before {
+    left: 11px;
+    right: auto;
+  }
+}
+
+/* ============================================================
+   Culture Section (扬州文化·深化内容)
+   ============================================================ */
+#culture-section {
+  background: var(--bg-primary);
+  transition: background 0.6s ease;
+}
+
+.culture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.culture-card {
+  perspective: 1000px;
+  height: 320px;
+}
+
+.culture-card-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  transform-style: preserve-3d;
+}
+
+.culture-card:hover .culture-card-inner { transform: rotateY(180deg); }
+
+.culture-card-front,
+.culture-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+.culture-card-front { z-index: 2; }
+.culture-card-front .culture-icon { font-size: 3.5rem; margin-bottom: 16px; color: var(--accent-gold); }
+.culture-card-front h3 { font-size: 1.25rem; font-weight: 700; }
+
+.culture-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, var(--accent-ink), #0d2137);
+  color: #e0e0e0;
+  text-align: center;
+  padding: 24px;
+}
+
+.culture-card-back p { font-size: 0.95rem; line-height: 1.8; }
+
+/* ============================================================
+   Campus Story Section (双镜湖故事·校训故事)
+   ============================================================ */
+#story-section {
+  background: var(--bg-secondary);
+  transition: background 0.6s ease;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 30px;
+}
+
+.story-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 36px;
+  transition: all 0.4s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.story-card .story-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.story-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.story-card p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.85;
+}
+
+/* ============================================================
+   Campus Map Section
+   ============================================================ */
+#map-section {
+  background: var(--bg-primary);
+  transition: background 0.6s ease;
+}
+
+.map-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.map-image-wrap {
+  position: sticky;
+  top: 100px;
+}
+
+.map-image-container {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--glass-border);
+  background: #000;
+}
+
+.campus-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+}
+
+.map-particle-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.map-scan-line {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(201,169,110,0.7), transparent);
+  z-index: 3;
+  pointer-events: none;
+  animation: mapScan 3s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(201,169,110,0.5), 0 0 60px rgba(201,169,110,0.2);
+}
+
+@keyframes mapScan {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.map-hotspots {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.map-hotspot {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.map-hotspot .hotspot-core {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 12px var(--glow-gold), 0 0 30px rgba(201,169,110,0.4);
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  position: relative;
+}
+
+.map-hotspot .hotspot-pulse {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-gold);
+  animation: hotspotPulse 2s ease-out infinite;
+}
+
+.map-hotspot .hotspot-pulse:nth-child(2) { animation-delay: 0.6s; }
+.map-hotspot .hotspot-pulse:nth-child(3) { animation-delay: 1.2s; }
+
+.map-hotspot .hotspot-label {
+  position: absolute;
+  top: 22px; left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  padding: 3px 10px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.map-hotspot:hover .hotspot-label { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+.map-hotspot:hover .hotspot-core {
+  transform: scale(1.6);
+  background: #fff;
+  box-shadow: 0 0 24px rgba(201,169,110,0.8), 0 0 50px rgba(201,169,110,0.5);
+}
+
+.map-hotspot:hover .hotspot-pulse {
+  border-color: #fff;
+  animation-duration: 1s;
+}
+
+.map-hotspot.active .hotspot-core {
+  background: var(--accent-warm);
+  box-shadow: 0 0 20px rgba(224,123,90,0.7), 0 0 40px rgba(224,123,90,0.4);
+}
+
+@keyframes hotspotPulse {
+  0% { width: 16px; height: 16px; opacity: 0.9; }
+  100% { width: 60px; height: 60px; opacity: 0; }
+}
+
+.map-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.map-legend .legend-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.map-legend .legend-dot.active { background: var(--accent-warm); }
+
+.map-landmarks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  align-content: start;
+}
+
+.map-landmark {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.map-landmark:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-gold);
+}
+
+.map-landmark i { font-size: 1.8rem; color: var(--accent-gold); transition: transform 0.3s ease; }
+.map-landmark:hover i { transform: scale(1.2); }
+.map-landmark .lm-name { font-weight: 600; font-size: 0.9rem; }
+.map-landmark .lm-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Map sparks */
+.map-spark {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  animation: sparkFloat 2s ease-out forwards;
+}
+
+@keyframes sparkFloat {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; }
+}
+
+/* ============================================================
+   Enrollment CTA Section (招生转化)
+   ============================================================ */
+#enroll-section {
+  background: linear-gradient(135deg, var(--accent-ink), #0d2137);
+  color: #fff;
+  text-align: center;
+  padding: 80px 40px;
+}
+
+#enroll-section .section-title {
+  background: linear-gradient(135deg, #c9a96e, #e8d5a3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#enroll-section .section-subtitle { color: rgba(255,255,255,0.6); }
+
+.enroll-cta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.enroll-cta-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 32px 20px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: pointer;
+}
+
+.enroll-cta-card:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: var(--accent-gold);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(201,169,110,0.3);
+}
+
+.enroll-cta-card i {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+  color: var(--accent-gold);
+}
+
+.enroll-cta-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.enroll-cta-card p {
+  font-size: 0.82rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .enroll-cta-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .enroll-cta-grid { grid-template-columns: 1fr; }
+}
+
+/* Floating Enrollment Button */
+#floating-enroll {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9980;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.floating-enroll-fab {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e07b5a, #c0392b);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+  box-shadow: 0 6px 28px rgba(224,123,90,0.4);
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  animation: fabFloat 3s ease-in-out infinite;
+  text-decoration: none;
+}
+
+.floating-enroll-fab:hover {
+  transform: scale(1.12);
+  box-shadow: 0 10px 40px rgba(224,123,90,0.6);
+}
+
+.floating-enroll-label {
+  position: absolute;
+  right: 68px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.floating-enroll-fab:hover .floating-enroll-label,
+.floating-enroll-label.show {
+  opacity: 1;
+}
+
+@keyframes fabFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ============================================================
+   Honor Wall (荣誉墙)
+   ============================================================ */
+#honor-section {
+  background: var(--bg-secondary);
+  transition: background 0.6s ease;
+}
+
+.honor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.honor-item {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.honor-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-gold);
+}
+
+.honor-item .honor-medal {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.honor-item h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.honor-item p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+#footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  padding: 60px 40px 30px;
+  transition: background 0.6s ease;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-col h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.footer-col p,
+.footer-col li {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 2;
+}
+
+.footer-col ul { list-style: none; }
+
+.footer-col a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-col a:hover { color: var(--accent-gold); }
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* ============================================================
+   Scroll-triggered animations
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+              transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.reveal-left { opacity: 0; transform: translateX(-60px); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+
+.reveal-right { opacity: 0; transform: translateX(60px); }
+.reveal-right.visible { opacity: 1; transform: translateX(0); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+
+.reveal-scale { opacity: 0; transform: scale(0.85); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+
+.stagger > * { opacity: 0; transform: translateY(40px); transition: all 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+.stagger > *.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 768px) {
+  .section { padding: 60px 20px; }
+  .map-layout { grid-template-columns: 1fr; }
+  .map-image-wrap { position: static; }
+  .mascot-cards { grid-template-columns: 1fr; }
+  .culture-grid { grid-template-columns: 1fr; }
+  .story-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--accent-gold);
+  border-radius: 3px;
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     Intro Overlay (粒子核爆点入口)
+     ============================================================ -->
+<div id="intro-overlay">
+  <canvas id="intro-canvas"></canvas>
+  <div class="intro-text-stage" id="introTextStage">
+    <div class="intro-logo-text" id="introLogoText">YPI</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     Navigation
+     ============================================================ -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <i class="fa-solid fa-feather-pointed"></i>
+    <span>扬工院</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#hero">首页</a></li>
+    <li><a href="#data-section">学校概况</a></li>
+    <li><a href="#achievements-section">办学成果</a></li>
+    <li><a href="#programs-section">专业设置</a></li>
+    <li><a href="#timeline-section">发展历程</a></li>
+    <li><a href="#mascot-section">吉祥物</a></li>
+    <li><a href="#map-section">校园导览</a></li>
+    <li><a href="#enroll-section">招生入口</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     Hero Section
+     ============================================================ -->
+<section id="hero" class="section">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">🏫 江苏省示范性高等职业院校</div>
+    <img src="yzgy.png" alt="扬州工业职业技术学院" class="hero-logo-img">
+    <img src="校训.png" alt="厚德强能 · 笃学创新" class="hero-motto-img">
+    <p class="hero-subtitle">
+      扬子津科教园核心院校 · 双镜湖畔青春校园<br>
+      厚德强能 · 笃学创新
+    </p>
+    <div class="hero-cta">
+      <a href="#data-section" class="btn btn-primary"><i class="fa-solid fa-chart-bar"></i> 了解扬工</a>
+      <a href="#enroll-section" class="btn btn-outline"><i class="fa-solid fa-pen-to-square"></i> 我要报考</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Data Dashboard (数据中心)
+     ============================================================ -->
+<section id="data-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">数据扬工</span>
+    <h2 class="section-title reveal">数字看扬工</h2>
+    <p class="section-subtitle reveal">每一个数字背后，都是扬工人的努力与荣耀</p>
+    <div class="data-grid stagger">
+      <div class="data-card reveal">
+        <div class="data-number"><span data-count="1978">0</span></div>
+        <div class="data-label">年建校</div>
+      </div>
+      <div class="data-card reveal">
+        <div class="data-number"><span data-count="16000">0</span><span class="data-suffix">+</span></div>
+        <div class="data-label">在校生</div>
+      </div>
+      <div class="data-card reveal">
+        <div class="data-number"><span data-count="700">0</span><span class="data-suffix">+</span></div>
+        <div class="data-label">教职工</div>
+      </div>
+      <div class="data-card reveal">
+        <div class="data-number"><span data-count="98">0</span><span class="data-suffix">%</span></div>
+        <div class="data-label">就业率</div>
+      </div>
+      <div class="data-card reveal">
+        <div class="data-number"><span data-count="300">0</span><span class="data-suffix">+</span></div>
+        <div class="data-label">合作企业</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Achievements Section (办学成果)
+     ============================================================ -->
+<section id="achievements-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">办学成果</span>
+    <h2 class="section-title reveal">扬工实力 · 金牌高职</h2>
+    <p class="section-subtitle reveal">以科技赋能教育，以人文滋养心灵</p>
+    <div class="achievements-grid stagger">
+      <div class="achievement-card reveal">
+        <div class="ach-icon">🏆</div>
+        <h3>蝉联五届"互联网+"金奖</h3>
+        <p>全国唯一蝉联五届中国国际"互联网+"大学生创新创业大赛金奖的高职院校，累计斩获金奖9项</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="ach-icon">🌍</div>
+        <h3>国际影响力50强</h3>
+        <p>连续三年获评全国职业院校国际影响力50强，留学生来自全球30多个国家和地区</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="ach-icon">🎓</div>
+        <h3>13个教学单位 · 47个专业</h3>
+        <p>涵盖化工、建筑、智能制造、信息工程、艺术设计等门类，服务长三角产业升级</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="ach-icon">🤝</div>
+        <h3>深度校企合作</h3>
+        <p>与中石化、华为、西门子等300+知名企业建立深度合作，工学结合定向培养</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Programs Section (专业设置)
+     ============================================================ -->
+<section id="programs-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">专业建设</span>
+    <h2 class="section-title reveal">对接产业 · 特色专业群</h2>
+    <p class="section-subtitle reveal">紧贴长三角产业需求，打造高水平专业集群</p>
+    <div class="programs-grid stagger">
+      <div class="program-card reveal">
+        <div class="prog-icon">🔬</div>
+        <h3>化工与制药</h3>
+        <p>国家骨干专业 · 省级高水平专业群</p>
+      </div>
+      <div class="program-card reveal">
+        <div class="prog-icon">🏗️</div>
+        <h3>建筑工程</h3>
+        <p>省级特色专业 · BIM技术应用领先</p>
+      </div>
+      <div class="program-card reveal">
+        <div class="prog-icon">🤖</div>
+        <h3>智能制造</h3>
+        <p>工业机器人 · 数控技术 · 省级实训基地</p>
+      </div>
+      <div class="program-card reveal">
+        <div class="prog-icon">💻</div>
+        <h3>信息技术</h3>
+        <p>人工智能 · 大数据 · 云计算方向</p>
+      </div>
+      <div class="program-card reveal">
+        <div class="prog-icon">🚗</div>
+        <h3>新能源汽车</h3>
+        <p>新能源汽车检测与维修 · 校企共建</p>
+      </div>
+      <div class="program-card reveal">
+        <div class="prog-icon">🎨</div>
+        <h3>艺术设计</h3>
+        <p>数字媒体 · 环境艺术 · 省级教学团队</p>
+      </div>
+      <div class="program-card reveal">
+        <div class="prog-icon">💰</div>
+        <h3>电子商务</h3>
+        <p>跨境电商 · 直播电商 · 省级示范专业</p>
+      </div>
+      <div class="program-card reveal">
+        <div class="prog-icon">🍽️</div>
+        <h3>烹饪工艺</h3>
+        <p>淮扬菜传承 · 国家级大师工作室</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Timeline Section (发展历程·滚动叙事)
+     ============================================================ -->
+<section id="timeline-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">发展历程</span>
+    <h2 class="section-title reveal">砥砺前行 · 扬工之路</h2>
+    <p class="section-subtitle reveal">从1978到2026，近五十载春华秋实</p>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-year">1978</div>
+        <div class="timeline-title">扬州市化工技工学校成立</div>
+        <div class="timeline-desc">改革开放元年，学校应运而生，从此扎根扬州大地，开启职业教育征程。</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2004</div>
+        <div class="timeline-title">升格为高等职业技术学院</div>
+        <div class="timeline-desc">经江苏省人民政府批准，正式升格为全日制普通高等职业院校，迈入发展快车道。</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2010</div>
+        <div class="timeline-title">省级示范性高职院校</div>
+        <div class="timeline-desc">获评江苏省示范性高等职业院校建设单位，办学实力获得广泛认可。</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2015</div>
+        <div class="timeline-title">蝉联"互联网+"金奖</div>
+        <div class="timeline-desc">连续斩获中国国际"互联网+"大学生创新创业大赛金奖，成为高职教育的一面旗帜。</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2020</div>
+        <div class="timeline-title">中国特色高水平高职学校</div>
+        <div class="timeline-desc">入选江苏省中国特色高水平高职学校建设单位，开启高质量发展新征程。</div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">2026</div>
+        <div class="timeline-title">迈向职教本科</div>
+        <div class="timeline-desc">锚定职教本科目标，打造全国一流的高水平职业技术大学，培养更多大国工匠。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Story Section (双镜湖故事·校训故事)
+     ============================================================ -->
+<section id="story-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">扬工故事</span>
+    <h2 class="section-title reveal">文脉传承 · 精神家园</h2>
+    <p class="section-subtitle reveal">每一个故事都是扬工精神的注脚</p>
+    <div class="story-grid stagger">
+      <div class="story-card reveal">
+        <div class="story-icon">🌊</div>
+        <h3>双镜湖的故事</h3>
+        <p>双镜湖因形似两面古镜而得名。相传明清时期，此处为文人墨客雅集之地，湖面如镜，倒映天光云影。如今，双镜湖是扬工院的精神象征——以湖为镜，照见初心；以水为德，润泽万物。白天鹅"雅韵"与黑天鹅"墨羽"悠游其上，见证着一届又一届学子的青春岁月。</p>
+      </div>
+      <div class="story-card reveal">
+        <div class="story-icon">📜</div>
+        <h3>校训的故事</h3>
+        <p>"厚德强能，笃学创新"——八字校训凝结了扬工院近五十年的办学智慧。<br><br><strong>厚德</strong>：以德为先，培养品德高尚的技术人才。<br><strong>强能</strong>：以能为重，锤炼过硬的职业技能。<br><strong>笃学</strong>：以学为本，倡导专注踏实的学习态度。<br><strong>创新</strong>：以新为魂，鼓励敢为人先的创造精神。</p>
+      </div>
+      <div class="story-card reveal">
+        <div class="story-icon">👨‍🎓</div>
+        <h3>杰出校友</h3>
+        <p>近五十年来，扬工院为国家培养了10万+技术技能人才。他们中有的成为全国技术能手、大国工匠，有的创办企业成为行业翘楚，有的扎根一线成为技术骨干。扬工学子遍布长三角，活跃在化工、建筑、制造、信息等各行各业，用实际行动诠释"厚德强能"的校训精神。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Mascot Section (IP形象·单独章节)
+     ============================================================ -->
+<section id="mascot-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">校园IP</span>
+    <h2 class="section-title reveal">双镜湖畔 · 天鹅之约</h2>
+    <p class="section-subtitle reveal">白天鹅"雅韵"与黑天鹅"墨羽"，扬工院的精神图腾</p>
+    <div class="mascot-cards stagger">
+      <div class="mascot-card white reveal" id="whiteSwanCard" data-swan="white">
+        <div class="mascot-icon-wrap">
+          🦢
+          <span class="mascot-wings left">🪶</span>
+          <span class="mascot-wings right">🪶</span>
+        </div>
+        <h3>雅韵 · 白天鹅</h3>
+        <p class="mascot-subtitle">纯洁优雅 · 从容前行</p>
+        <div class="mascot-interact-count">已互动 <strong id="whiteCount">0</strong> 次</div>
+        <div class="mascot-water-ripple"></div>
+      </div>
+      <div class="mascot-card black reveal" id="blackSwanCard" data-swan="black">
+        <div class="mascot-icon-wrap">
+          🦢
+          <span class="mascot-wings left">🪶</span>
+          <span class="mascot-wings right">🪶</span>
+        </div>
+        <h3>墨羽 · 黑天鹅</h3>
+        <p class="mascot-subtitle">神秘坚韧 · 逆风翱翔</p>
+        <div class="mascot-interact-count">已互动 <strong id="blackCount">0</strong> 次</div>
+        <div class="mascot-water-ripple"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Swan Blessing Modal -->
+<div class="swan-blessing-overlay" id="blessingOverlay"></div>
+<div class="swan-blessing" id="blessingModal">
+  <div class="blessing-icon" id="blessingIcon">🦢</div>
+  <p class="blessing-text" id="blessingText"></p>
+  <button class="blessing-close" id="blessingClose">收下祝福 ✨</button>
+</div>
+
+<!-- ============================================================
+     Culture Section (扬州文化)
+     ============================================================ -->
+<section id="culture-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">城市底蕴</span>
+    <h2 class="section-title reveal">千年文脉 · 扬州风骨</h2>
+    <p class="section-subtitle reveal">扬州，一座被唐诗宋词浸润的城市。扬工院扎根于此，传承千年文脉</p>
+    <div class="culture-grid stagger">
+      <div class="culture-card reveal-left">
+        <div class="culture-card-inner">
+          <div class="culture-card-front">
+            <span class="culture-icon">⛵</span>
+            <h3>运河文化</h3>
+          </div>
+          <div class="culture-card-back">
+            <p>中国大运河原点城市。千年运河穿城而过，孕育了扬州的繁华与开放。扬工院坐落于古运河畔，传承水之灵动。</p>
+          </div>
+        </div>
+      </div>
+      <div class="culture-card reveal">
+        <div class="culture-card-inner">
+          <div class="culture-card-front">
+            <span class="culture-icon">🏯</span>
+            <h3>园林艺术</h3>
+          </div>
+          <div class="culture-card-back">
+            <p>个园以四季假山闻名，何园被誉为"晚清第一名园"。扬州园林融北方之雄与南方之秀，是中国园林艺术的瑰宝。</p>
+          </div>
+        </div>
+      </div>
+      <div class="culture-card reveal-right">
+        <div class="culture-card-inner">
+          <div class="culture-card-front">
+            <span class="culture-icon">🎨</span>
+            <h3>扬州八怪</h3>
+          </div>
+          <div class="culture-card-back">
+            <p>清代中期活跃于扬州的革新派画家群体，以郑板桥、金农等为代表。他们打破传统，追求个性表达，开一代新风。</p>
+          </div>
+        </div>
+      </div>
+      <div class="culture-card reveal-left">
+        <div class="culture-card-inner">
+          <div class="culture-card-front">
+            <span class="culture-icon">📜</span>
+            <h3>雕版印刷</h3>
+          </div>
+          <div class="culture-card-back">
+            <p>扬州是中国雕版印刷术的发源地之一，保存了完整的古代雕版印刷技艺。2009年入选联合国非遗名录。</p>
+          </div>
+        </div>
+      </div>
+      <div class="culture-card reveal">
+        <div class="culture-card-inner">
+          <div class="culture-card-front">
+            <span class="culture-icon">🍜</span>
+            <h3>淮扬美食</h3>
+          </div>
+          <div class="culture-card-back">
+            <p>淮扬菜为中国四大菜系之一，以刀工精细、火候精妙著称。扬州炒饭、蟹粉狮子头、大煮干丝享誉世界。</p>
+          </div>
+        </div>
+      </div>
+      <div class="culture-card reveal-right">
+        <div class="culture-card-inner">
+          <div class="culture-card-front">
+            <span class="culture-icon">🏛️</span>
+            <h3>历史名城</h3>
+          </div>
+          <div class="culture-card-back">
+            <p>扬州建城史逾2500年，是世界遗产城市。曾为古代中国最繁华的商埠之一，"烟花三月下扬州"传诵千古。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Honor Wall (荣誉墙)
+     ============================================================ -->
+<section id="honor-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">荣誉殿堂</span>
+    <h2 class="section-title reveal">荣耀扬工 · 实力见证</h2>
+    <p class="section-subtitle reveal">每一份荣誉，都是扬工人奋斗的里程碑</p>
+    <div class="honor-grid stagger">
+      <div class="honor-item reveal">
+        <div class="honor-medal">🥇</div>
+        <h3>国家教学成果奖</h3>
+        <p>荣获国家级教学成果二等奖</p>
+      </div>
+      <div class="honor-item reveal">
+        <div class="honor-medal">🏅</div>
+        <h3>全国高职院校服务贡献50强</h3>
+        <p>连续多年入选</p>
+      </div>
+      <div class="honor-item reveal">
+        <div class="honor-medal">🎖️</div>
+        <h3>教育部现代学徒制试点</h3>
+        <p>首批试点单位</p>
+      </div>
+      <div class="honor-item reveal">
+        <div class="honor-medal">⭐</div>
+        <h3>江苏省文明校园</h3>
+        <p>连续多届获评</p>
+      </div>
+      <div class="honor-item reveal">
+        <div class="honor-medal">🔬</div>
+        <h3>省级工程研究中心</h3>
+        <p>多个省级科研平台</p>
+      </div>
+      <div class="honor-item reveal">
+        <div class="honor-medal">📚</div>
+        <h3>国家级规划教材</h3>
+        <p>主编教材入选国家规划</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Campus Map Section
+     ============================================================ -->
+<section id="map-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">校园导览</span>
+    <h2 class="section-title reveal">实景地图 · 云游校园</h2>
+    <p class="section-subtitle reveal">扬子津科教园 · 双镜湖畔。点击建筑查看详情</p>
+    <div class="map-layout">
+      <div class="map-image-wrap reveal-left">
+        <div class="map-image-container" id="mapImageContainer">
+          <img src="map.jpg" alt="扬州工业职业技术学院校园实景地图" class="campus-photo" id="campusPhoto">
+          <canvas class="map-particle-canvas" id="mapParticleCanvas"></canvas>
+          <div class="map-hotspots" id="mapHotspots"></div>
+          <div class="map-scan-line"></div>
+        </div>
+        <div class="map-legend">
+          <span><span class="legend-dot"></span> 悬停查看位置</span>
+          <span><span class="legend-dot active"></span> 点击查看详情</span>
+        </div>
+      </div>
+      <div class="map-landmarks stagger" id="landmarkCards">
+        <div class="map-landmark reveal" data-landmark="library-main">
+          <i class="fa-solid fa-building-columns"></i>
+          <span class="lm-name">图文信息大楼</span>
+          <span class="lm-desc">🏛️ 校园地标 · 藏书80万+册</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="library-lake">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="lm-name">湖畔图书馆</span>
+          <span class="lm-desc">🌊 双镜湖畔 · 临窗阅湖</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="meiyuan">
+          <i class="fa-solid fa-house"></i>
+          <span class="lm-name">梅苑学生公寓</span>
+          <span class="lm-desc">🌸 女生公寓 · 空调独卫</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="lanyuan">
+          <i class="fa-solid fa-house"></i>
+          <span class="lm-name">兰苑学生公寓</span>
+          <span class="lm-desc">🌿 男生公寓 · 紧邻体育场</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="zhuyuan">
+          <i class="fa-solid fa-house"></i>
+          <span class="lm-name">竹苑学生公寓</span>
+          <span class="lm-desc">🎋 综合公寓 · 竹林掩映</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="canteen1">
+          <i class="fa-solid fa-utensils"></i>
+          <span class="lm-name">第一食堂</span>
+          <span class="lm-desc">🍜 淮扬风味 · 扬州炒饭</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="canteen2">
+          <i class="fa-solid fa-utensils"></i>
+          <span class="lm-name">第二食堂（民族餐厅）</span>
+          <span class="lm-desc">🕌 清真餐饮 · 多民族风味</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="teaching">
+          <i class="fa-solid fa-school"></i>
+          <span class="lm-name">启智教学楼群</span>
+          <span class="lm-desc">📚 智慧教室 · 中轴核心区</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="engineering">
+          <i class="fa-solid fa-gears"></i>
+          <span class="lm-name">工程实训中心</span>
+          <span class="lm-desc">🔧 数控机床 · 工业机器人</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="student-center">
+          <i class="fa-solid fa-users"></i>
+          <span class="lm-name">大学生活动中心</span>
+          <span class="lm-desc">🎭 社团文艺 · 创新创业</span>
+        </div>
+        <div class="map-landmark reveal" data-landmark="sports">
+          <i class="fa-solid fa-futbol"></i>
+          <span class="lm-name">体育馆</span>
+          <span class="lm-desc">⚽ 游泳馆 · 健身中心</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Enrollment Section (招生入口)
+     ============================================================ -->
+<section id="enroll-section" class="section">
+  <div class="section-inner">
+    <span class="section-label reveal" style="color:rgba(255,255,255,0.5);">加入扬工</span>
+    <h2 class="section-title reveal">选择扬工 · 成就未来</h2>
+    <p class="section-subtitle reveal" style="color:rgba(255,255,255,0.6);">2026招生季现已启动，欢迎报考扬州工业职业技术学院</p>
+    <div class="enroll-cta-grid stagger">
+      <a href="https://www.ypi.edu.cn/zsjy.htm" target="_blank" rel="noopener" class="enroll-cta-card reveal">
+        <i class="fa-solid fa-file-lines"></i>
+        <h3>招生简章</h3>
+        <p>查看最新招生政策与计划</p>
+      </a>
+      <a href="https://www.ypi.edu.cn" target="_blank" rel="noopener" class="enroll-cta-card reveal">
+        <i class="fa-solid fa-message"></i>
+        <h3>在线咨询</h3>
+        <p>招生老师一对一解答</p>
+      </a>
+      <a href="#programs-section" class="enroll-cta-card reveal">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <h3>专业查询</h3>
+        <p>了解47个专业详情</p>
+      </a>
+      <a href="https://www.ypi.edu.cn" target="_blank" rel="noopener" class="enroll-cta-card reveal">
+        <i class="fa-solid fa-vr-cardboard"></i>
+        <h3>校园VR</h3>
+        <p>720°全景云游校园</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Floating Enrollment Button
+     ============================================================ -->
+<div id="floating-enroll">
+  <a href="#enroll-section" class="floating-enroll-fab" title="我要报考">
+    ✍️
+    <span class="floating-enroll-label">我要报考</span>
+  </a>
+</div>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h3>🏫 扬州工业职业技术学院</h3>
+      <p>
+        江苏省示范性高等职业院校<br>
+        江苏省中国特色高水平高职学校建设单位<br>
+        校训：厚德强能 · 笃学创新
+      </p>
+    </div>
+    <div class="footer-col">
+      <h3>📞 联系方式</h3>
+      <ul>
+        <li>📍 江苏省扬州市华扬西路199号</li>
+        <li>📮 扬子津科教园 · 邮编225127</li>
+        <li>📞 0514-87433007</li>
+        <li>🌐 <a href="https://www.ypi.edu.cn" target="_blank" rel="noopener">www.ypi.edu.cn</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>🔗 快速链接</h3>
+      <ul>
+        <li><a href="https://www.ypi.edu.cn" target="_blank" rel="noopener">🏫 学校官网</a></li>
+        <li><a href="https://www.ypi.edu.cn/zsjy.htm" target="_blank" rel="noopener">📋 招生就业</a></li>
+        <li><a href="#mascot-section">🦢 吉祥物专区</a></li>
+        <li><a href="#culture-section">🏯 扬州文化</a></li>
+        <li><a href="#map-section">🗺️ 校园地图</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 扬州工业职业技术学院 · 本页面为品牌形象展示 · 部分信息参考学校官方公开资料
+  </div>
+</footer>
+
+<!-- Minimal toast -->
+<div id="minimalToast" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);z-index:9995;background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:14px;padding:14px 24px;font-size:0.9rem;color:var(--text-primary);box-shadow:var(--shadow-md);opacity:0;transition:all 0.4s cubic-bezier(0.2,0.9,0.4,1.1);pointer-events:none;"></div>
+
+<script>
+/* ============================================================
+   YZPI Brand Website — Main JavaScript
+   重构版：减少动效过载，聚焦核心信息传达
+   ============================================================ */
+
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+// ── DOM Refs ──────────────────────────────────────────────
+const introOverlay = $('#intro-overlay');
+const introCanvas = $('#intro-canvas');
+const introTextStage = $('#introTextStage');
+const navbar = $('#navbar');
+const themeToggle = $('#themeToggle');
+const navLinks = $('#navLinks');
+const mobileMenuBtn = $('#mobileMenuBtn');
+const heroCanvas = $('#hero-canvas');
+const whiteSwanCard = $('#whiteSwanCard');
+const blackSwanCard = $('#blackSwanCard');
+const blessingOverlay = $('#blessingOverlay');
+const blessingModal = $('#blessingModal');
+const blessingIcon = $('#blessingIcon');
+const blessingText = $('#blessingText');
+const blessingClose = $('#blessingClose');
+const minimalToast = $('#minimalToast');
+
+// ── State ─────────────────────────────────────────────────
+let whiteInteractCount = 0;
+let blackInteractCount = 0;
+let lastScrollY = 0;
+let isDark = false;
+let mouseX = 0, mouseY = 0;
+
+/* ============================================================
+   PART 1: INTRO ANIMATION (粒子核爆点)
+   粒子 → 形成YPI → 变为校徽 → 消散进入首页
+   ============================================================ */
+(function() {
+  const ctx = introCanvas.getContext('2d');
+  let introParticles = [];
+  let animId;
+  let stage = 'scatter'; // scatter → converge → hold → dissolve
+  let stageStart = 0;
+  const INTRO_PARTICLE_COUNT = 300;
+
+  function resizeIntro() {
+    introCanvas.width = window.innerWidth;
+    introCanvas.height = window.innerHeight;
+  }
+  resizeIntro();
+  window.addEventListener('resize', resizeIntro);
+
+  class IntroParticle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * introCanvas.width;
+      this.y = Math.random() * introCanvas.height;
+      this.size = Math.random() * 2.5 + 0.8;
+      this.vx = (Math.random() - 0.5) * 0.8;
+      this.vy = (Math.random() - 0.5) * 0.8;
+      this.opacity = Math.random() * 0.6 + 0.3;
+      this.gold = Math.random() > 0.4;
+    }
+    convergeTo(targetX, targetY, progress) {
+      const eased = 1 - Math.pow(1 - progress, 3);
+      this.x += (targetX - this.x) * 0.04 * (1 + eased);
+      this.y += (targetY - this.y) * 0.04 * (1 + eased);
+      this.vx *= 0.96;
+      this.vy *= 0.96;
+    }
+    dissolve() {
+      this.x += this.vx * 1.5;
+      this.y += this.vy * 1.5 - 0.5;
+      this.opacity -= 0.008;
+      this.size *= 0.995;
+    }
+    scatter() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < -20) this.x = introCanvas.width + 20;
+      if (this.x > introCanvas.width + 20) this.x = -20;
+      if (this.y < -20) this.y = introCanvas.height + 20;
+      if (this.y > introCanvas.height + 20) this.y = -20;
+    }
+    draw(ctx) {
+      const color = this.gold
+        ? `rgba(201,169,110,${this.opacity})`
+        : `rgba(45,138,123,${this.opacity})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+  }
+
+  // Generate target positions forming "YPI" text pattern
+  function getYPITargets() {
+    const cx = introCanvas.width / 2;
+    const cy = introCanvas.height / 2;
+    const targets = [];
+    // Simple YPI letterforms as pixel positions relative to center
+    const scale = Math.min(introCanvas.width, introCanvas.height) / 800;
+
+    // Y (left third)
+    const yPts = [
+      [-120,-80],[-120,-60],[-120,-40],[-120,-20],[-120,0],
+      [-120,20],[-120,40],[-120,60],[-120,80],
+      [-100,-40],[-100,-20],[-100,0],
+      [-80,-80],[-80,-60],[-80,-40],[-80,-20],[-80,0],
+      [-80,20],[-80,40],[-80,60],[-80,80],
+      [-60,-80],[-60,-60],
+      [-40,-80],[-40,-60],
+    ];
+    // P (middle third)
+    const pPts = [
+      [20,-80],[20,-60],[20,-40],[20,-20],[20,0],
+      [20,20],[20,40],[20,60],[20,80],
+      [40,-80],[40,-60],[40,-40],[40,-20],[40,0],
+      [60,-80],[60,-60],[60,-40],[60,-20],
+      [80,-80],[80,-60],
+    ];
+    // I (right third)
+    const iPts = [
+      [140,-80],[140,-60],[140,-40],[140,-20],[140,0],
+      [140,20],[140,40],[140,60],[140,80],
+    ];
+
+    const allPts = [...yPts, ...pPts, ...iPts];
+    return allPts.map(([px, py]) => ({
+      x: cx + px * scale,
+      y: cy + py * scale,
+    }));
+  }
+
+  const ypiTargets = getYPITargets();
+
+  function initIntro() {
+    introParticles = Array.from({ length: INTRO_PARTICLE_COUNT }, () => new IntroParticle());
+  }
+  initIntro();
+
+  function assignTargets() {
+    const targets = getYPITargets();
+    // Assign each particle to nearest available target
+    const shuffled = [...introParticles].sort(() => Math.random() - 0.5);
+    const used = new Set();
+    shuffled.forEach(p => {
+      let best = null, bestDist = Infinity;
+      targets.forEach((t, i) => {
+        if (used.has(i)) return;
+        const dx = p.x - t.x, dy = p.y - t.y;
+        const dist = dx * dx + dy * dy;
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      if (best !== null) {
+        used.add(best);
+        p._target = targets[best];
+      }
+    });
+  }
+
+  // Stage timing
+  const STAGE_TIMING = {
+    scatter: 600,   // Initial scatter
+    converge: 1800, // Converge to YPI
+    hold: 1200,     // Hold YPI shape
+    dissolve: 800,  // Dissolve into page
+  };
+
+  function animateIntro(timestamp) {
+    if (!stageStart) stageStart = timestamp;
+    const elapsed = timestamp - stageStart;
+
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, introCanvas.width, introCanvas.height);
+
+    // Stage transitions
+    if (stage === 'scatter' && elapsed > STAGE_TIMING.scatter) {
+      stage = 'converge';
+      stageStart = timestamp;
+      assignTargets();
+      // Show YPI text
+      introTextStage.classList.add('show');
+    } else if (stage === 'converge' && elapsed > STAGE_TIMING.converge) {
+      stage = 'hold';
+      stageStart = timestamp;
+    } else if (stage === 'hold' && elapsed > STAGE_TIMING.hold) {
+      stage = 'dissolve';
+      stageStart = timestamp;
+      introTextStage.classList.remove('show');
+    } else if (stage === 'dissolve' && elapsed > STAGE_TIMING.dissolve) {
+      introOverlay.classList.add('hidden');
+      // Trigger hero animations
+      document.querySelectorAll('.hero-content > *').forEach((el, i) => {
+        el.style.animationDelay = `${0.15 * i}s`;
+      });
+      return;
+    }
+
+    introParticles.forEach(p => {
+      if (stage === 'scatter') {
+        p.scatter();
+      } else if (stage === 'converge') {
+        const progress = Math.min(elapsed / STAGE_TIMING.converge, 1);
+        const t = p._target || { x: introCanvas.width / 2, y: introCanvas.height / 2 };
+        p.convergeTo(t.x, t.y, progress);
+      } else if (stage === 'dissolve') {
+        p.dissolve();
+      }
+      // Hold stage: gentle float
+      if (stage === 'hold') {
+        p.x += Math.sin(elapsed * 0.003 + p.x * 0.01) * 0.3;
+        p.y += Math.cos(elapsed * 0.003 + p.y * 0.01) * 0.3;
+      }
+      p.draw(ctx);
+    });
+
+    animId = requestAnimationFrame(animateIntro);
+  }
+
+  // Start after fonts load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      animId = requestAnimationFrame(animateIntro);
+    }, 300);
+  });
+
+  // Skip intro on click
+  introOverlay.addEventListener('click', () => {
+    if (stage !== 'dissolve') {
+      stage = 'dissolve';
+      stageStart = performance.now();
+      introTextStage.classList.remove('show');
+    }
+  });
+})();
+
+/* ============================================================
+   PART 2: THEME & NAVIGATION
+   ============================================================ */
+function setTheme(dark) {
+  isDark = dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeToggle.innerHTML = dark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+  localStorage.setItem('yzpi-theme', dark ? 'dark' : 'light');
+}
+
+themeToggle.addEventListener('click', () => setTheme(!isDark));
+
+const savedTheme = localStorage.getItem('yzpi-theme');
+if (savedTheme === 'dark') setTheme(true);
+else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+
+// Mobile menu
+mobileMenuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+// Navbar hide/show on scroll
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  const currentY = window.scrollY;
+  if (currentY > lastScrollY && currentY > 200) {
+    navbar.classList.add('hidden');
+  } else {
+    navbar.classList.remove('hidden');
+  }
+  lastScrollY = currentY;
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => navbar.classList.remove('hidden'), 2000);
+}, { passive: true });
+
+/* ============================================================
+   PART 3: HERO PARTICLE SYSTEM (subtle, one main animation)
+   ============================================================ */
+(function() {
+  const heroCtx = heroCanvas.getContext('2d');
+  let particles = [];
+  let particleColorBase;
+
+  function resizeHeroCanvas() {
+    heroCanvas.width = window.innerWidth;
+    heroCanvas.height = window.innerHeight;
+  }
+  resizeHeroCanvas();
+  window.addEventListener('resize', resizeHeroCanvas);
+
+  const isMobile = () => window.innerWidth < 768;
+  const getCount = () => isMobile() ? 40 : 100;
+
+  class HeroParticle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * heroCanvas.width;
+      this.y = Math.random() * heroCanvas.height;
+      this.size = Math.random() * 2 + 0.6;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.4 + 0.1;
+      this.phase = Math.random() * Math.PI * 2;
+    }
+    update() {
+      this.speedX += Math.sin(this.phase + Date.now() * 0.0003) * 0.003;
+      this.speedY += Math.cos(this.phase + Date.now() * 0.0004) * 0.003;
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < -10) this.x = heroCanvas.width + 10;
+      if (this.x > heroCanvas.width + 10) this.x = -10;
+      if (this.y < -10) this.y = heroCanvas.height + 10;
+      if (this.y > heroCanvas.height + 10) this.y = -10;
+    }
+    draw(ctx) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${particleColorBase}, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  function initHeroParticles() {
+    particleColorBase = getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim();
+    particles = Array.from({ length: getCount() }, () => new HeroParticle());
+  }
+  initHeroParticles();
+
+  const themeObs = new MutationObserver(() => initHeroParticles());
+  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  function animateHero() {
+    heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+    particles.forEach(p => { p.update(); p.draw(heroCtx); });
+    // Draw connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          heroCtx.beginPath();
+          heroCtx.moveTo(particles[i].x, particles[i].y);
+          heroCtx.lineTo(particles[j].x, particles[j].y);
+          heroCtx.strokeStyle = `rgba(${particleColorBase}, ${0.05 * (1 - dist / 100)})`;
+          heroCtx.lineWidth = 0.5;
+          heroCtx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animateHero);
+  }
+  requestAnimationFrame(animateHero);
+
+  // Parallax
+  window.addEventListener('scroll', () => {
+    const heroEl = document.getElementById('hero');
+    if (heroEl) heroCanvas.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+  }, { passive: true });
+
+  // Reduce on hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) particles = particles.slice(0, 20);
+    else initHeroParticles();
+  });
+})();
+
+/* ============================================================
+   PART 4: SCROLL REVEAL + COUNTER ANIMATION
+   ============================================================ */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.classList.contains('stagger')) {
+        entry.target.children.forEach((child, i) => {
+          child.style.transitionDelay = `${i * 0.06}s`;
+          child.classList.add('visible');
+        });
+      }
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+$$('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// Counter animation (data dashboard)
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.count);
+      const duration = 2000;
+      const startTime = performance.now();
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(target * eased);
+        el.textContent = current.toLocaleString();
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target.toLocaleString();
+      }
+      requestAnimationFrame(step);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+$$('[data-count]').forEach(el => counterObserver.observe(el));
+
+// Timeline items
+const timelineObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      timelineObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+$$('.timeline-item').forEach(el => timelineObserver.observe(el));
+
+/* ============================================================
+   PART 5: SWAN MASCOT INTERACTIONS (reduced)
+   ============================================================ */
+const whiteBlessings = [
+  '愿你如白天鹅般优雅前行，在知识的湖面上划出最美的涟漪 🦢',
+  '纯洁是你的底色，坚韧是你的羽翼。加油，扬工学子！✨',
+  '厚德强能，笃学创新。白天鹅"雅韵"祝你学业有成，前程似锦 🌸',
+  '每一次展翅，都是对天空的向往。勇敢追逐你的梦想吧！💫',
+  '双镜湖畔，白羽翩翩。愿你在这里收获最美好的大学时光 📖',
+];
+
+const blackBlessings = [
+  '黑天鹅"墨羽"伴你攻克每一个难关，黑暗之后即是黎明 🌙',
+  '独特如你，不必随波逐流。黑天鹅的优雅，在于做真实的自己 🖤',
+  '每一次逆风飞翔，都让你更加强大。相信自己，你可以的！💪',
+  '墨羽之下，藏着最闪亮的星光。你本就独一无二 ✨',
+  '坚韧不拔，厚积薄发。黑天鹅祝你在扬工院开启精彩人生 🎓',
+];
+
+function showBlessing(type) {
+  const blessings = type === 'white' ? whiteBlessings : blackBlessings;
+  const text = blessings[Math.floor(Math.random() * blessings.length)];
+  blessingIcon.textContent = '🦢';
+  blessingText.textContent = text;
+  blessingOverlay.classList.add('show');
+  blessingModal.classList.add('show');
+}
+
+function hideBlessing() {
+  blessingOverlay.classList.remove('show');
+  blessingModal.classList.remove('show');
+}
+
+function animateCount(el, target) {
+  const start = parseInt(el.textContent) || 0;
+  const duration = 400;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(start + (target - start) * eased);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+whiteSwanCard.addEventListener('click', () => {
+  whiteInteractCount++;
+  animateCount($('#whiteCount'), whiteInteractCount);
+  showBlessing('white');
+});
+
+blackSwanCard.addEventListener('click', () => {
+  blackInteractCount++;
+  animateCount($('#blackCount'), blackInteractCount);
+  showBlessing('black');
+});
+
+blessingClose.addEventListener('click', hideBlessing);
+blessingOverlay.addEventListener('click', hideBlessing);
+
+// Double-click to copy blessing
+blessingClose.addEventListener('dblclick', () => {
+  navigator.clipboard.writeText(blessingText.textContent).then(() => {
+    showMinimalToast('📋 祝福语已复制，分享给朋友吧！');
+  }).catch(() => {});
+});
+
+/* ============================================================
+   PART 6: MINIMAL TOAST (精简80%)
+   ============================================================ */
+let toastTimer;
+function showMinimalToast(msg) {
+  minimalToast.textContent = msg;
+  minimalToast.style.opacity = '1';
+  minimalToast.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    minimalToast.style.opacity = '0';
+    minimalToast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2000);
+}
+
+/* ============================================================
+   PART 7: MAP INTERACTIONS
+   ============================================================ */
+const landmarkData = {
+  'library-main': { name: '图文信息大楼', loc: '校园中轴地标 · 双镜湖东侧 · 图书馆80万+册' },
+  'library-lake': { name: '湖畔图书馆', loc: '双镜湖北岸 · 临湖而建 · 览湖阅书' },
+  'meiyuan': { name: '梅苑学生公寓', loc: '校园西区 · 女生公寓 · 空调独卫' },
+  'lanyuan': { name: '兰苑学生公寓', loc: '校园西南区 · 男生公寓 · 紧邻体育场' },
+  'zhuyuan': { name: '竹苑学生公寓', loc: '校园南区 · 综合公寓 · 竹林环绕' },
+  'canteen1': { name: '第一食堂', loc: '校园中区 · 淮扬风味 · 扬州炒饭' },
+  'canteen2': { name: '第二食堂（民族餐厅）', loc: '校园东区 · 清真餐饮 · 多民族风味' },
+  'teaching': { name: '启智教学楼群', loc: '校园中轴核心 · 智慧教室 · 多媒体教学' },
+  'engineering': { name: '工程实训中心', loc: '校园东北区 · 数控机床 · 工业机器人' },
+  'student-center': { name: '大学生活动中心', loc: '校园南区 · 社团文艺 · 创新创业基地' },
+  'sports': { name: '体育馆', loc: '校园东南区 · 游泳馆 · 健身中心' },
+};
+
+// Click landmark cards
+$$('.map-landmark').forEach(card => {
+  card.addEventListener('click', () => {
+    const key = card.dataset.landmark;
+    const data = landmarkData[key];
+    if (data) showMinimalToast(`📍 ${data.name}：${data.loc}`);
+    $$('.map-hotspot').forEach(hs => hs.classList.remove('active'));
+    const hotspot = $(`.map-hotspot[data-landmark="${key}"]`);
+    if (hotspot) {
+      hotspot.classList.add('active');
+      spawnMapSparks(hotspot);
+      setTimeout(() => hotspot.classList.remove('active'), 2000);
+    }
+  });
+});
+
+// Map particle canvas
+const mapCanvas = $('#mapParticleCanvas');
+let mapCtx, mapParticles = [];
+let mapAnimId;
+
+function initMapCanvas() {
+  if (!mapCanvas) return;
+  const container = $('#mapImageContainer');
+  const rect = container.getBoundingClientRect();
+  mapCanvas.width = rect.width;
+  mapCanvas.height = rect.height;
+  mapCtx = mapCanvas.getContext('2d');
+  const count = window.innerWidth < 768 ? 25 : 60;
+  mapParticles = Array.from({ length: count }, () => ({
+    x: Math.random() * mapCanvas.width,
+    y: Math.random() * mapCanvas.height,
+    size: Math.random() * 2 + 0.5,
+    vx: (Math.random() - 0.5) * 0.25,
+    vy: (Math.random() - 0.5) * 0.25,
+    opacity: Math.random() * 0.4 + 0.1,
+    life: Math.random() * 200,
+  }));
+}
+
+function animateMapCanvas() {
+  if (!mapCtx || !mapCanvas) { mapAnimId = requestAnimationFrame(animateMapCanvas); return; }
+  mapCtx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
+
+  const mapSection = $('#map-section');
+  const rect = mapSection.getBoundingClientRect();
+  if (rect.bottom < 0 || rect.top > window.innerHeight) {
+    mapAnimId = requestAnimationFrame(animateMapCanvas);
+    return;
+  }
+
+  mapParticles.forEach(p => {
+    p.x += p.vx + Math.sin(p.life * 0.02) * 0.1;
+    p.y += p.vy + Math.cos(p.life * 0.025) * 0.1;
+    p.life++;
+    if (p.x < 0) p.x = mapCanvas.width;
+    if (p.x > mapCanvas.width) p.x = 0;
+    if (p.y < 0) p.y = mapCanvas.height;
+    if (p.y > mapCanvas.height) p.y = 0;
+    const flicker = 0.5 + 0.5 * Math.sin(p.life * 0.05);
+    mapCtx.beginPath();
+    mapCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    mapCtx.fillStyle = `rgba(201,169,110,${p.opacity * flicker})`;
+    mapCtx.fill();
+  });
+
+  for (let i = 0; i < mapParticles.length; i++) {
+    for (let j = i + 1; j < mapParticles.length; j++) {
+      const dx = mapParticles[i].x - mapParticles[j].x;
+      const dy = mapParticles[i].y - mapParticles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 50) {
+        mapCtx.beginPath();
+        mapCtx.moveTo(mapParticles[i].x, mapParticles[i].y);
+        mapCtx.lineTo(mapParticles[j].x, mapParticles[j].y);
+        mapCtx.strokeStyle = `rgba(201,169,110,${0.03 * (1 - dist / 50)})`;
+        mapCtx.lineWidth = 0.5;
+        mapCtx.stroke();
+      }
+    }
+  }
+  mapAnimId = requestAnimationFrame(animateMapCanvas);
+}
+
+function resizeMapCanvas() {
+  if (!mapCanvas || !$('#mapImageContainer')) return;
+  const rect = $('#mapImageContainer').getBoundingClientRect();
+  mapCanvas.width = rect.width;
+  mapCanvas.height = rect.height;
+}
+
+const campusPhoto = $('#campusPhoto');
+if (campusPhoto) {
+  if (campusPhoto.complete) initMapCanvas();
+  else campusPhoto.addEventListener('load', initMapCanvas);
+} else {
+  initMapCanvas();
+}
+requestAnimationFrame(animateMapCanvas);
+
+if (campusPhoto) campusPhoto.addEventListener('load', resizeMapCanvas);
+
+// Hotspot system
+const hotspotPositions = [
+  { id: 'library-main',    x: 50, y: 32, label: '图文信息大楼' },
+  { id: 'library-lake',    x: 30, y: 52, label: '湖畔图书馆' },
+  { id: 'teaching',        x: 44, y: 44, label: '启智教学楼群' },
+  { id: 'engineering',     x: 72, y: 24, label: '工程实训中心' },
+  { id: 'meiyuan',         x: 16, y: 60, label: '梅苑' },
+  { id: 'lanyuan',         x: 34, y: 68, label: '兰苑' },
+  { id: 'zhuyuan',         x: 54, y: 76, label: '竹苑' },
+  { id: 'canteen1',        x: 58, y: 50, label: '第一食堂' },
+  { id: 'canteen2',        x: 76, y: 52, label: '第二食堂' },
+  { id: 'student-center',  x: 56, y: 84, label: '大学生活动中心' },
+  { id: 'sports',          x: 82, y: 72, label: '体育馆' },
+];
+
+function createHotspots() {
+  const container = $('#mapHotspots');
+  if (!container) return;
+  container.innerHTML = '';
+
+  hotspotPositions.forEach(h => {
+    const el = document.createElement('div');
+    el.className = 'map-hotspot';
+    el.dataset.landmark = h.id;
+    el.style.left = h.x + '%';
+    el.style.top = h.y + '%';
+    el.title = h.label;
+    el.innerHTML = `
+      <div class="hotspot-core"></div>
+      <div class="hotspot-pulse"></div>
+      <div class="hotspot-pulse"></div>
+      <div class="hotspot-pulse"></div>
+      <span class="hotspot-label">${h.label}</span>
+    `;
+
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const data = landmarkData[h.id];
+      if (data) showMinimalToast(`📍 ${data.name}：${data.loc}`);
+      $$('.map-hotspot').forEach(hs => hs.classList.remove('active'));
+      el.classList.add('active');
+      spawnMapSparks(el);
+      setTimeout(() => el.classList.remove('active'), 2000);
+      $$('.map-landmark').forEach(c => c.style.borderColor = '');
+      const card = $(`.map-landmark[data-landmark="${h.id}"]`);
+      if (card) {
+        card.style.borderColor = 'var(--accent-warm)';
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => { card.style.borderColor = ''; }, 2500);
+      }
+    });
+
+    el.addEventListener('mouseenter', () => spawnMapSparks(el));
+    container.appendChild(el);
+  });
+}
+
+function spawnMapSparks(hotspot) {
+  const container = $('#mapImageContainer');
+  if (!container) return;
+  const cRect = container.getBoundingClientRect();
+  const hRect = hotspot.getBoundingClientRect();
+  const cx = hRect.left + hRect.width / 2 - cRect.left;
+  const cy = hRect.top + hRect.height / 2 - cRect.top;
+
+  for (let i = 0; i < 6; i++) {
+    const spark = document.createElement('div');
+    spark.className = 'map-spark';
+    spark.style.left = cx + 'px';
+    spark.style.top = cy + 'px';
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 12 + Math.random() * 30;
+    spark.style.setProperty('--sx', `${Math.cos(angle) * dist}px`);
+    spark.style.setProperty('--sy', `${Math.sin(angle) * dist}px`);
+    spark.style.animationDuration = `${1 + Math.random() * 1.5}s`;
+    container.appendChild(spark);
+    setTimeout(() => spark.remove(), 2500);
+  }
+}
+
+createHotspots();
+window.addEventListener('resize', resizeMapCanvas);
+
+/* ============================================================
+   PART 8: FLOATING ENROLL LABEL
+   ============================================================ */
+const floatingLabel = $('.floating-enroll-label');
+if (floatingLabel) {
+  setInterval(() => {
+    floatingLabel.classList.toggle('show');
+    setTimeout(() => floatingLabel.classList.toggle('show'), 3000);
+  }, 8000);
+  // Show initially after intro
+  setTimeout(() => floatingLabel.classList.add('show'), 5000);
+  setTimeout(() => floatingLabel.classList.remove('show'), 8000);
+}
+
+/* ============================================================
+   PART 9: KEYBOARD SHORTCUTS & MISC
+   ============================================================ */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 't' && e.ctrlKey) {
+    e.preventDefault();
+    setTheme(!isDark);
+    showMinimalToast(isDark ? '已切换至深色模式 🌙' : '已切换至浅色模式 ☀️');
+  }
+  if (e.key === 'Escape') hideBlessing();
+});
+
+// Track mouse position for hero particles (optional subtle interaction)
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+}, { passive: true });
+
+// Handle window resize for particle count
+let resizeDebounce;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeDebounce);
+  resizeDebounce = setTimeout(() => resizeMapCanvas(), 300);
+});
+
+console.log('%c🦢 扬州工业职业技术学院 %c品牌形象网站 v2.0 已就绪',
+  'font-size:1.2em;font-weight:bold;color:#c9a96e;',
+  'color:#888;');
+console.log('%c✨ 白天鹅"雅韵" · 黑天鹅"墨羽" %c欢迎你的到来 💫',
+  'font-size:1em;color:#2d8a7b;',
+  'color:#888;');
+console.log('%c💡 提示：按 Ctrl+T 切换深色/浅色模式',
+  'color:#aaa;font-size:0.85em;');
+</script>
+</body>
+</html>
